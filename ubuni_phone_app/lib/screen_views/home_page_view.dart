@@ -8,12 +8,7 @@ class HomePageView extends StatefulWidget {
 }
 
 class _HomePageViewState extends State<HomePageView> {
-  // int _currentIndex = 0;
 
-  // List<Widget> _views = [
-  //   ListView(),
-  //   SingleView(),
-  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +28,9 @@ class _HomePageViewState extends State<HomePageView> {
             ],
           ),
         ),
-        backgroundColor: Colors.black87,
+        backgroundColor: Colors.black,
         appBar: AppBar(
-          // leading: Icon(Icons.menu),
+          leading: Icon(Icons.menu),
           title: Text('OurPhoneShop'),
           actions: [
             Padding(
