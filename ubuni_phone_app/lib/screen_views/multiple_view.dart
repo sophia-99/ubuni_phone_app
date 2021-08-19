@@ -1,8 +1,17 @@
+
+
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
+import 'package:flutter/material.dart';
+
+
+import 'package:flutter_image/flutter_image.dart';
 import 'package:ubuni_phone_app/models/phone_model.dart';
+
+
+
 
 class MultipleView extends StatefulWidget {
   @override
@@ -10,7 +19,7 @@ class MultipleView extends StatefulWidget {
 }
 
 class _MultipleViewState extends State<MultipleView> {
-List phoneData;
+  List phoneData;
 
   Future<List<PhoneModel>> getPhones() async {
     final response = await http.get(
@@ -31,28 +40,24 @@ if (response.statusCode == 200) {
       throw Exception('Failed to load phone');
     }
   }
-  
-
-  @override
+@override
   void initState() {
     super.initState();
     this.getPhones();
   }
 
- 
-
   @override
   Widget build(BuildContext context) {
+    // final _phonService = Provider.of<PhoneService>(context);
     return ListView.builder(
+        // itemCount: _phonService.phoneList.length,
         itemCount: phoneData == null ? 0 : phoneData.length,
-        // itemCount: data == null ? 0 : data.length,
         itemBuilder: (context, index) {
           return Padding(
             padding:
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
             child: Container(
-              decoration: BoxDecoration(
-                ),
+              decoration: BoxDecoration(),
               height: 200.0,
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -71,11 +76,12 @@ if (response.statusCode == 200) {
                             decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(30.0),
                                 image: DecorationImage(
-                                    image:
-                                        AssetImage(phoneData[index].image))),
-                            // child: Image(
-                            //   image: AssetImage('assets/images/beauty_one.jpg'),
-                            // ),
+                                    image: NetworkImageWithRetry(
+                                      phoneData[index].image
+                                        // _phonService.phoneList[index].image
+                                        )
+                                        )
+                                        ),
                           ),
                         ),
                       ),
@@ -95,7 +101,7 @@ if (response.statusCode == 200) {
                           decoration: BoxDecoration(
                               color: Colors.amber,
                               borderRadius: BorderRadius.circular(30.0)),
-                          child: Center(child: Text('smartPhone')),
+                          child: Center(child: Text('smartphones')),
                         ),
                         SizedBox(
                           height: 20.0,
@@ -106,7 +112,7 @@ if (response.statusCode == 200) {
                         SizedBox(
                           height: 20.0,
                         ),
-                        Text(phoneData[index].name,
+                        Text(phoneData[index].brand,
                             style: TextStyle(color: Colors.white)),
                         SizedBox(
                           height: 20.0,
