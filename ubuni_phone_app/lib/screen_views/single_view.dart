@@ -27,8 +27,7 @@ class _SingleViewState extends State<SingleView> {
       }
       return APIResponse<PhoneModel>(error: true, errorMessage: "error");
     });
-    // .catchError(
-    //     () => APIResponse<PhoneModel>(error: true, errorMessage: "error"));
+   
   }
 
   String errorMessage;

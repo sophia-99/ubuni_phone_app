@@ -43,6 +43,7 @@ class _HomePageViewState extends State<HomePageView> {
             ),
           ),
           appBar: AppBar(
+            
             leading: Icon(Icons.menu),
             title: Text('OurPhoneShop'),
             actions: [
@@ -63,6 +64,7 @@ class _HomePageViewState extends State<HomePageView> {
             ),
           ),
           body: TabBarView(
+            
             children: [
               MultipleView(),
               SingleView()

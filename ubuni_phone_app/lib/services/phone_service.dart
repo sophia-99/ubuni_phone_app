@@ -31,29 +31,5 @@ class PhoneService with ChangeNotifier {
     return _hasError;
   }
 
-  // Future<bool> singlePhone(int id) async {
-  //   bool _hasError = false;
-  //   final response = await http.get(
-  //       Uri.parse('https://www.paa.ubuni.co.tz/phones/:id'),
-  //       headers: {"accept": "application/json"});
-  //   print(response.body);
-  //   if (response.statusCode == 200) {
-  //     _phoneLists = parsePhone(response.body);
-  //     print(_phoneLists.length);
-  //     for (var item in _phoneLists) {
-  //       if (item.id == id) {
-  //         return item.id == id;
-  //       } else {
-  //         return null;
-  //       }
-  //     }
-
-  //     _hasError = false;
-  //     notifyListeners();
-  //   } else {
-  //     _hasError = true;
-  //   }
-  //   return _hasError;
-  // }
   
 }
