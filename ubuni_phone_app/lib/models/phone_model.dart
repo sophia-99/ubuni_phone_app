@@ -1,26 +1,3 @@
-class PhoneModel {
-  final int id;
-  final String name;
-  final String brand;
-  final String image;
-
-  PhoneModel({
-    this.id,
-    this.name,
-    this.brand,
-    this.image,
-  });
-
-  PhoneModel.fromMap(Map<String, dynamic> map)
-      : assert(map['id'] != null),
-        assert(map['name'] != null),
-        assert(map['Brand'] != null),
-        id = map['id'],
-        name = map['name'],
-        brand = map['Brand'],
-        image = map['Image_url'];
-}
-
 // class PhoneModel {
 //   final int id;
 //   final String name;
@@ -28,21 +5,44 @@ class PhoneModel {
 //   final String image;
 
 //   PhoneModel({
-//      this.id,
-//      this.name,
-//      this.brand,
-//      this.image,
+//     this.id,
+//     this.name,
+//     this.brand,
+//     this.image,
 //   });
 
-//   factory PhoneModel.fromJson(Map<String, dynamic> json) {
-//     return PhoneModel(
-//       id: json['id'],
-//       name: json['name'],
-//       brand: json['Brand'],
-//       image: json['Image_url'],
-//     );
-//   }
+//   PhoneModel.fromMap(Map<String, dynamic> map)
+//       : assert(map['id'] != null),
+//         assert(map['name'] != null),
+//         assert(map['Brand'] != null),
+//         id = map['id'],
+//         name = map['name'],
+//         brand = map['Brand'],
+//         image = map['image_url'];
 // }
+
+class PhoneModel {
+  final int id;
+  final String name;
+  final String brand;
+  final String image;
+
+  PhoneModel({
+     this.id,
+     this.name,
+     this.brand,
+     this.image,
+  });
+
+  factory PhoneModel.fromJson(Map<String, dynamic> json) {
+    return PhoneModel(
+      id: json['id'],
+      name: json['name'],
+      brand: json['Brand'],
+      image: json['Image_url'],
+    );
+  }
+}
 
 // // class PhoneModel {
 // //   final int id;

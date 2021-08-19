@@ -1,36 +1,8 @@
-
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-
-import 'package:ubuni_phone_app/components/phone_card.dart';
-import 'package:ubuni_phone_app/services/phone_service.dart';
-
-// import 'package:provider/provider.dart';
-
-// import 'package:ubuni_phone_app/services/phone_service.dart';
-
-// class PhoneModel {
-//   final int id;
-//   final String name;
-//   final String brand;
-//   final String image;
-
-//   PhoneModel({
-//     this.id,
-//     this.name,
-//     this.brand,
-//     this.image,
-//   });
-
-//   PhoneModel.fromMap(Map<String, dynamic> map)
-//       : assert(map['id'] = !null),
-//         id = map['id'],
-//         name = map['name'],
-//         brand = map['Brand'],
-//         image = map['Image_url'];
-// }
+import 'package:http/http.dart' as http;
+import 'package:ubuni_phone_app/models/phone_model.dart';
 
 class MultipleView extends StatefulWidget {
   @override
@@ -38,46 +10,117 @@ class MultipleView extends StatefulWidget {
 }
 
 class _MultipleViewState extends State<MultipleView> {
-  // List data;
+List phoneData;
+
+  Future<List<PhoneModel>> getPhones() async {
+    final response = await http.get(
+        Uri.parse('https://www.paa.ubuni.co.tz/phones'),
+        headers: {"Accept": "application/json"});
+print(response.body);
+if (response.statusCode == 200) {
+      List phoneList = jsonDecode(response.body);
+      List<PhoneModel> _fetchedPhones = [];
+      phoneList.forEach((phone) {
+        final _phone = PhoneModel.fromJson(phone);
+        _fetchedPhones.add(_phone);
+      });
+      phoneData = _fetchedPhones;
+      print(phoneData.length);
+      return phoneData;
+    } else {
+      throw Exception('Failed to load phone');
+    }
+  }
+  
 
   @override
-  // void initState() {
-  //   super.initState();
-  //   this.getPhones();
-  // }
+  void initState() {
+    super.initState();
+    this.getPhones();
+  }
 
-  // Future<bool> getPhones() async {
-  //   final response =
-  //       await http.get(Uri.parse('https://www.paa.ubuni.co.tz/phones'));
-  //   print(response.body);
-
-  //   setState(() {
-  //     var _phoneLists = json.decode(response.body);
-  //     data = _phoneLists['phones'];
-  //   });
-  //   return hasError;
-  // }
-
-  // if (response.statusCode == 200) {
-  //   // If the server did return a 200 OK response,
-  //   // then parse the JSON.
-  //   return PhoneModel.fromJson(jsonDecode(response.body));
-  // } else {
-  //   // If the server did not return a 200 OK response,
-  //   // then throw an exception.
-  //   throw Exception('Failed to load phone');
-  // }
+ 
 
   @override
   Widget build(BuildContext context) {
-    final _phoneService = Provider.of<PhoneService>(context);
     return ListView.builder(
-        itemCount: _phoneService.phoneList.length,
+        itemCount: phoneData == null ? 0 : phoneData.length,
+        // itemCount: data == null ? 0 : data.length,
         itemBuilder: (context, index) {
-          return PhoneCard(
-            phone: _phoneService.phoneList[index],
+          return Padding(
+            padding:
+                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+            child: Container(
+              decoration: BoxDecoration(
+                ),
+              height: 200.0,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Stack(
+                    children: [
+                      Container(
+                        padding: EdgeInsets.all(10.0),
+                        width: MediaQuery.of(context).size.width * 0.60,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.white),
+                        child: Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(30.0),
+                                image: DecorationImage(
+                                    image:
+                                        AssetImage(phoneData[index].image))),
+                            // child: Image(
+                            //   image: AssetImage('assets/images/beauty_one.jpg'),
+                            // ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    width: 10.0,
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10.0, vertical: 10.0),
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 40.0,
+                          width: 110.0,
+                          decoration: BoxDecoration(
+                              color: Colors.amber,
+                              borderRadius: BorderRadius.circular(30.0)),
+                          child: Center(child: Text('smartPhone')),
+                        ),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Text(phoneData[index].name,
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 25.0)),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Text(phoneData[index].name,
+                            style: TextStyle(color: Colors.white)),
+                        SizedBox(
+                          height: 20.0,
+                        ),
+                        Row(
+                          children: [Icon(Icons.select_all), Icon(Icons.label)],
+                        )
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ),
           );
-         
         });
   }
 }
