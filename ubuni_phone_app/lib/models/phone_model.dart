@@ -2,16 +2,15 @@ class PhoneModel {
   final int id;
   final String name;
   final String brand;
-  final String image;
+  final String? image;
 
   PhoneModel({
-     this.id,
-     this.name,
-     this.brand,
-     this.image,
-  });
+    required this.id, 
+    required this.name, 
+    required this.brand, 
+    required this.image});
 
-  factory PhoneModel.fromJson(Map<String, dynamic> json) {
+     factory PhoneModel.fromJson(Map<String, dynamic> json) {
     return PhoneModel(
       id: json['id'],
       name: json['name'],
