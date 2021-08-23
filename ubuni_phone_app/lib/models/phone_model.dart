@@ -15,7 +15,7 @@ class PhoneModel {
       id: json['id'],
       name: json['name'],
       brand: json['Brand'],
-      image: json['Image_url'],
+      image: json['image_url'],
     );
   }
 }
